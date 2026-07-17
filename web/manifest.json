@@ -1,6 +1,6 @@
 {
-    "name": "excelerate_app",
-    "short_name": "excelerate_app",
+    "name": "Excelerate",
+    "short_name": "Excelerate",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
