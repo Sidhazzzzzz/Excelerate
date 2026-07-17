@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:excelerate_app/pages/home.dart';
+import 'package:excelerate/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
