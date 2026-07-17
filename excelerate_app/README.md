@@ -1,4 +1,4 @@
-# excelerateLearningHub
+# ExcelerateLearningHub
 
 ## Project Vision
 
