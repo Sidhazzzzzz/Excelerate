@@ -1,8 +1,11 @@
-// ignore_for_file: avoid_print
-
-import 'package:excelerate/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'theme/app_theme.dart';
+import 'screens/splash_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/register_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/course_details_screen.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +21,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -26,17 +28,24 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initialization() async {
-    print('pausing.....');
-    await Future.delayed(const Duration(seconds: 3));
-    print('unpausing.....');
+    await Future.delayed(const Duration(milliseconds: 500));
     FlutterNativeSplash.remove();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Excelerate Learning Hub',
+      theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      home:  HomePage(),
+      initialRoute: '/splash',
+      routes: {
+        '/splash': (context) => const SplashScreen(),
+        '/register': (context) => RegisterScreen(),
+        '/home': (context) => HomeScreen(),
+        '/login': (context) => LoginScreen(),
+        '/details': (context) => CourseDetailsScreen(),
+      },
     );
   }
 }
