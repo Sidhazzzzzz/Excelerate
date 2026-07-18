@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: const TextSpan(
                       children: [
                         TextSpan(
-                          text: 'excelerate',
+                          text: 'Excelerate',
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,

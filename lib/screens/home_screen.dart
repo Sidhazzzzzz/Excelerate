@@ -131,14 +131,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text(
                             'Excelerate',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
                           Text(
                             'Learn. Grow. Excelerate.',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.white70,

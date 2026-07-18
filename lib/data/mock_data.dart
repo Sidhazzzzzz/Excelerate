@@ -405,6 +405,7 @@ class MockData {
     }
 
     registeredUsers.add(newUser);
+    currentUser = newUser;
     return true;
   }
 
