@@ -1,5 +1,6 @@
 // screens/login_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../data/mock_data.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -48,15 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
+                      color: Colors.white.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(30),
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                         width: 2,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
+                          color: Colors.black.withValues(alpha: 0.2),
                           blurRadius: 20,
                           spreadRadius: 5,
                         ),
@@ -103,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
+                      color: Colors.white.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Text(
@@ -138,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black.withValues(alpha: 0.1),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -311,11 +312,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: SizedBox(
                             width: 20,
                             height: 20,
-                            child: Image.network(
+                            child: SvgPicture.network(
                               'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Icon(Icons.g_mobiledata);
-                              },
+                              width: 20,
+                              height: 20,
+                              placeholderBuilder: (context) => const Icon(Icons.g_mobiledata),
                             ),
                           ),
                           label: const Text(
@@ -350,7 +351,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.15),
+                            color: Colors.white.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Image.asset(
@@ -377,7 +378,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         "Don't have an account?",
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 0.8),
                           fontSize: 14,
                         ),
                       ),
