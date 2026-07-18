@@ -726,7 +726,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       decoration: BoxDecoration(
         color: const Color(0xFFECF2FF),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFF1E3A8A).withOpacity(0.1)),
+        border: Border.all(color: const Color(0xFF1E3A8A).withValues(alpha: 0.1)),
       ),
       child: Column(
         children: [
@@ -757,7 +757,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         side: BorderSide(
           color: isCompleted
               ? Colors.green.shade200
-              : const Color(0xFF1E3A8A).withOpacity(0.1),
+              : const Color(0xFF1E3A8A).withValues(alpha: 0.1),
           width: isCompleted ? 2 : 1,
         ),
       ),
