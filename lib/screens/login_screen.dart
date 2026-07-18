@@ -414,6 +414,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Simulate API call
       await Future.delayed(const Duration(seconds: 1));
+      if (!mounted) return;
 
       // Try to login with the provided username
       final success = MockData.login(

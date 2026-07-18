@@ -462,6 +462,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
       await Future.delayed(Duration(seconds: double.parse("1.5").toInt()));
+      if (!mounted) return;
       
       final newUser = User(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
