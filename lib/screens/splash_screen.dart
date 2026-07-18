@@ -63,11 +63,14 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    _animationController.forward();
-
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/login');
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, '/login');
+      }
     });
+
+    _animationController.forward();
   }
 
   @override
@@ -93,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen>
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    const Color(0xFF1E3A8A).withOpacity(0.07),
+                    const Color(0xFF1E3A8A).withValues(alpha: 0.07),
                     Colors.transparent,
                   ],
                   stops: const [0.0, 0.6],
@@ -111,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen>
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    const Color(0xFF022051).withOpacity(0.06),
+                    const Color(0xFF022051).withValues(alpha: 0.06),
                     Colors.transparent,
                   ],
                   stops: const [0.0, 0.5],
@@ -139,7 +142,7 @@ class _SplashScreenState extends State<SplashScreen>
                           borderRadius: BorderRadius.circular(28),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF022051).withOpacity(0.12),
+                              color: const Color(0xFF022051).withValues(alpha: 0.12),
                               blurRadius: 35,
                               spreadRadius: 6,
                               offset: const Offset(0, 8),
@@ -203,9 +206,9 @@ class _SplashScreenState extends State<SplashScreen>
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            const Color(0xFF022051).withOpacity(0.08),
+                            const Color(0xFF022051).withValues(alpha: 0.08),
                             const Color(0xFF022051),
-                            const Color(0xFF022051).withOpacity(0.08),
+                            const Color(0xFF022051).withValues(alpha: 0.08),
                           ],
                         ),
                       ),
