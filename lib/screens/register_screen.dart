@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../data/mock_data.dart';
+import '../models/user.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -460,27 +462,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
       await Future.delayed(Duration(seconds: double.parse("1.5").toInt()));
+      
+      final newUser = User(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        username: _usernameController.text,
+        email: _emailController.text,
+        phoneNumber: _phoneController.text,
+      );
+      
+      final success = MockData.registerUser(newUser);
+      
       setState(() => _isLoading = false);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.check_circle, color: Colors.white),
-              SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  'Registration successful! Welcome to Excelerate! 🎉',
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Registration successful! Welcome to Excelerate! 🎉',
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
           ),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 3),
-        ),
-      );
+        );
 
-      Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Username or email already exists. Please try another.'),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
     }
   }
 
