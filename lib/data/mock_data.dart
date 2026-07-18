@@ -340,11 +340,14 @@ class MockData {
 
   // Login method
   static bool login(String username, String password) {
-    // For mock data, accept any password and find user by username
-    final user = registeredUsers.firstWhere(
-      (user) => user.username.toLowerCase() == username.toLowerCase(),
-      orElse: () => registeredUsers.first,
-    );
+    User? user;
+    try {
+      user = registeredUsers.firstWhere(
+        (u) => u.username.toLowerCase() == username.toLowerCase(),
+      );
+    } catch (e) {
+      return false;
+    }
 
     currentUser = user.copyWith(lastLogin: DateTime.now());
 
