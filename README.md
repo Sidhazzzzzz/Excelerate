@@ -98,11 +98,13 @@ The application provides a simple and organized learning experience where learne
 
 ## Screenshots
 
-| Splash | Login | Home | Course Details |
-|---|---|---|---|
-| ![Splash](assets/screenshots/splash.png) | ![Login](assets/screenshots/login.png) | ![Home](assets/screenshots/home.png) | ![Details](assets/screenshots/details.png) |
-
-<!-- TODO: actual screenshots still need to be captured and added by hand -->
+<div align="center">
+  <img src="assets/screenshots/splash.jpeg" width="200" alt="Splash Screen">
+  <img src="assets/screenshots/login.jpeg" width="200" alt="Login Screen">
+  <img src="assets/screenshots/register.jpeg" width="200" alt="Register Screen">
+  <img src="assets/screenshots/home.jpeg" width="200" alt="Home Screen">
+  <img src="assets/screenshots/course_details.jpeg" width="200" alt="Course Details Screen">
+</div>
 
 ## Project Name
 
