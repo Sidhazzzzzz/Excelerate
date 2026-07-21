@@ -1,3 +1,4 @@
+// models/course.dart
 import 'package:excelerate/models/module.dart';
 
 class Course {
@@ -31,23 +32,39 @@ class Course {
     DateTime? createdAt,
   }) : createdAt = createdAt ?? DateTime.now();
 
-  // Factory constructor for creating a Course from JSON (for API responses)
+  // Factory constructor for creating a Course from JSON
   factory Course.fromJson(Map<String, dynamic> json) {
+    // Handle progress which might be null
+    double progressValue = 0.0;
+    if (json['progress'] != null) {
+      if (json['progress'] is int) {
+        progressValue = (json['progress'] as int).toDouble();
+      } else if (json['progress'] is double) {
+        progressValue = json['progress'] as double;
+      }
+    }
+
+    // Handle modules which might be null or empty
+    List<Module> moduleList = [];
+    if (json['modules'] != null && json['modules'] is List) {
+      moduleList = (json['modules'] as List)
+          .map((module) => Module.fromJson(module))
+          .toList();
+    }
+
     return Course(
-      id: json['id'] ?? '',
+      id: json['id']?.toString() ?? '',
       title: json['title'] ?? '',
       author: json['author'] ?? '',
       description: json['description'] ?? '',
       imageUrl: json['imageUrl'] ?? '',
       duration: json['duration'] ?? '',
       isFree: json['isFree'] ?? true,
-      progress: (json['progress'] ?? 0.0).toDouble(),
+      progress: progressValue,
       studentCount: json['studentCount'] ?? 0,
       rating: (json['rating'] ?? 4.5).toDouble(),
       reviewCount: json['reviewCount'] ?? 0,
-      modules: (json['modules'] as List? ?? [])
-          .map((module) => Module.fromJson(module))
-          .toList(),
+      modules: moduleList,
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
           : DateTime.now(),
@@ -73,7 +90,7 @@ class Course {
     };
   }
 
-  // Copy with method for updating specific fields
+  // Copy with method
   Course copyWith({
     String? id,
     String? title,

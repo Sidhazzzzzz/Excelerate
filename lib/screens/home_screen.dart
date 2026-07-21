@@ -1,8 +1,9 @@
-// screens/home_screen.dart
 import 'package:flutter/material.dart';
 import '../data/mock_data.dart';
 import '../models/course.dart';
 import '../models/user.dart';
+import '../services/api_service.dart';
+import '../theme/app_theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,24 +14,50 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final ApiService _apiService = ApiService();
+
+  List<Course> _courses = [];
   List<Course> _filteredCourses = [];
+  bool _isLoading = true;
   bool _isSearching = false;
+  String? _errorMessage;
 
   User get _currentUser => MockData.currentUser;
 
   @override
   void initState() {
     super.initState();
-    _filteredCourses = MockData.recommendedCourses;
+    _loadCourses();
+  }
+
+  Future<void> _loadCourses() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final courses = await _apiService.getCourses();
+      setState(() {
+        _courses = courses;
+        _filteredCourses = courses;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Failed to load courses. Please try again.';
+        _isLoading = false;
+      });
+    }
   }
 
   void _filterCourses(String query) {
     setState(() {
       _isSearching = query.isNotEmpty;
       if (query.isEmpty) {
-        _filteredCourses = MockData.recommendedCourses;
+        _filteredCourses = _courses;
       } else {
-        _filteredCourses = MockData.recommendedCourses
+        _filteredCourses = _courses
             .where(
               (course) =>
                   course.title.toLowerCase().contains(query.toLowerCase()) ||
@@ -90,113 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              // App Bar with Menu Button
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-                child: Row(
-                  children: [
-                    Builder(
-                      builder: (context) => IconButton(
-                        icon: const Icon(Icons.menu, color: Colors.white),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Image.asset(
-                        'assets/logo.png',
-                        height: 28,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
-                            Icons.school,
-                            color: Colors.white,
-                            size: 28,
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Excelerate',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            'Learn. Grow. Excelerate.',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.star,
-                            size: 16,
-                            color: Colors.amber.shade300,
-                          ),
-                          const SizedBox(width: 4),
-                          const Text(
-                            '4.8',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.notifications_outlined,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('No new notifications'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
+              // App Bar
+              _buildAppBar(),
 
               // Main Content
               Expanded(
@@ -208,167 +130,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       topRight: Radius.circular(30),
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      // Welcome & Search
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Welcome Back, ${_currentUser.fullName.isNotEmpty ? _currentUser.fullName : _currentUser.username}! 👋',
-                                        style: const TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xFF022051),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Continue your learning journey',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.grey[600],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color: const Color(
-                                      0xFF1E3A8A,
-                                    ).withValues(alpha: 0.1),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(
-                                    Icons.person,
-                                    color: Color(0xFF1E3A8A),
-                                    size: 24,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-
-                            // Search Bar
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(14),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.05),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: TextField(
-                                controller: _searchController,
-                                onChanged: _filterCourses,
-                                decoration: InputDecoration(
-                                  hintText: 'Search courses...',
-                                  prefixIcon: const Icon(
-                                    Icons.search,
-                                    color: Color(0xFF1E3A8A),
-                                  ),
-                                  suffixIcon: _searchController.text.isNotEmpty
-                                      ? IconButton(
-                                          icon: const Icon(
-                                            Icons.clear,
-                                            color: Colors.grey,
-                                          ),
-                                          onPressed: _clearSearch,
-                                        )
-                                      : null,
-                                  border: InputBorder.none,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 14,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Course List Header
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              _isSearching
-                                  ? '${_filteredCourses.length} Results'
-                                  : 'Recommended Courses',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF022051),
-                              ),
-                            ),
-                            if (_isSearching)
-                              TextButton(
-                                onPressed: _clearSearch,
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.zero,
-                                  minimumSize: const Size(0, 0),
-                                ),
-                                child: const Text('Clear'),
-                              ),
-                          ],
-                        ),
-                      ),
-
-                      // Course List
-                      Expanded(
-                        child: _filteredCourses.isEmpty
-                            ? const Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.search_off,
-                                      size: 64,
-                                      color: Colors.grey,
-                                    ),
-                                    SizedBox(height: 16),
-                                    Text(
-                                      'No courses found',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : ListView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 8,
-                                ),
-                                itemCount: _filteredCourses.length,
-                                itemBuilder: (context, index) {
-                                  final course = _filteredCourses[index];
-                                  return _buildCourseCard(course);
-                                },
-                              ),
-                      ),
-                    ],
-                  ),
+                  child: _isLoading
+                      ? _buildLoadingState()
+                      : _errorMessage != null
+                      ? _buildErrorState()
+                      : _buildContent(),
                 ),
               ),
             ],
@@ -378,13 +144,297 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildAppBar() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      child: Row(
+        children: [
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu, color: Colors.white),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Image.asset(
+              'assets/logo.png',
+              height: 28,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.school, color: Colors.white, size: 28);
+              },
+            ),
+          ),
+          const SizedBox(width: 12),
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Excelerate',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  'Learn. Grow. Excelerate.',
+                  style: TextStyle(fontSize: 12, color: Colors.white70),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.star, size: 16, color: Colors.amber.shade300),
+                const SizedBox(width: 4),
+                const Text(
+                  '4.8',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('No new notifications'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoadingState() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF1E3A8A)),
+          ),
+          SizedBox(height: 16),
+          Text(
+            'Loading courses...',
+            style: TextStyle(fontSize: 14, color: Colors.grey),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorState() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error_outline, size: 64, color: Colors.red.shade300),
+            const SizedBox(height: 16),
+            Text(
+              _errorMessage!,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: _loadCourses,
+              icon: const Icon(Icons.refresh),
+              label: const Text('Retry'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF1E3A8A),
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return Column(
+      children: [
+        // Welcome & Search
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Welcome Back, ${_currentUser.fullName.isNotEmpty ? _currentUser.fullName : _currentUser.username}! 👋',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF022051),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Continue your learning journey',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1E3A8A).withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.person,
+                      color: Color(0xFF1E3A8A),
+                      size: 24,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+
+              // Search Bar
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: _filterCourses,
+                  decoration: InputDecoration(
+                    hintText: 'Search courses...',
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: Color(0xFF1E3A8A),
+                    ),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.clear, color: Colors.grey),
+                            onPressed: _clearSearch,
+                          )
+                        : null,
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Course List Header
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _isSearching
+                    ? '${_filteredCourses.length} Results'
+                    : 'Recommended Courses',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF022051),
+                ),
+              ),
+              if (_isSearching)
+                TextButton(
+                  onPressed: _clearSearch,
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: const Size(0, 0),
+                  ),
+                  child: const Text('Clear'),
+                ),
+            ],
+          ),
+        ),
+
+        // Course List
+        Expanded(
+          child: _filteredCourses.isEmpty
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.search_off, size: 64, color: Colors.grey),
+                      SizedBox(height: 16),
+                      Text(
+                        'No courses found',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 8,
+                  ),
+                  itemCount: _filteredCourses.length,
+                  itemBuilder: (context, index) {
+                    final course = _filteredCourses[index];
+                    return _buildCourseCard(course);
+                  },
+                ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildDrawer() {
     return Drawer(
       child: Container(
         color: const Color(0xFFECF2FF),
         child: Column(
           children: [
-            // Drawer Header with User Info
+            // Drawer Header
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -400,40 +450,19 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  // User Avatar
                   Container(
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
+                      color: Colors.white.withOpacity(0.2),
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.3),
+                        color: Colors.white.withOpacity(0.3),
                         width: 3,
                       ),
                     ),
-                    child: Center(
-                      child: _currentUser.profileImageUrl.isNotEmpty
-                          ? ClipOval(
-                              child: Image.network(
-                                _currentUser.profileImageUrl,
-                                width: 80,
-                                height: 80,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Icon(
-                                    Icons.person,
-                                    size: 40,
-                                    color: Colors.white,
-                                  );
-                                },
-                              ),
-                            )
-                          : const Icon(
-                              Icons.person,
-                              size: 40,
-                              color: Colors.white,
-                            ),
+                    child: const Center(
+                      child: Icon(Icons.person, size: 40, color: Colors.white),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -452,11 +481,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     _currentUser.email,
                     style: TextStyle(
                       fontSize: 13,
-                      color: Colors.white.withValues(alpha: 0.7),
+                      color: Colors.white.withOpacity(0.7),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // Stats Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -478,7 +506,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // Drawer Items - Fixed: Each ListTile wrapped in Material
+            // Drawer Items
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -496,17 +524,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-
                   const Divider(height: 1, color: Colors.grey),
-
                   _buildDrawerTile(
                     icon: Icons.dashboard_outlined,
                     title: 'Dashboard',
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                    onTap: () => Navigator.pop(context),
                   ),
-
                   _buildDrawerTile(
                     icon: Icons.book_outlined,
                     title: 'My Courses',
@@ -520,7 +543,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-
                   _buildDrawerTile(
                     icon: Icons.bookmark_outline,
                     title: 'Wishlist',
@@ -534,7 +556,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-
                   _buildDrawerTile(
                     icon: Icons.verified_outlined,
                     title: 'Completed Courses',
@@ -548,9 +569,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-
                   const Divider(height: 1, color: Colors.grey),
-
                   _buildDrawerTile(
                     icon: Icons.settings_outlined,
                     title: 'Settings',
@@ -564,7 +583,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-
                   _buildDrawerTile(
                     icon: Icons.help_outline,
                     title: 'Help & Support',
@@ -578,7 +596,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-
                   _buildDrawerTile(
                     icon: Icons.info_outline,
                     title: 'About',
@@ -587,16 +604,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       _showAboutDialog();
                     },
                   ),
-
                   const Divider(height: 1, color: Colors.grey),
-
                   _buildDrawerTile(
                     icon: Icons.logout,
                     title: 'Logout',
                     color: Colors.red,
                     onTap: _handleLogout,
                   ),
-
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Center(
@@ -639,7 +653,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         Text(
           label,
-          style: TextStyle(fontSize: 12, color: Colors.white.withValues(alpha: 0.7)),
+          style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.7)),
         ),
       ],
     );
@@ -651,7 +665,6 @@ class _HomeScreenState extends State<HomeScreen> {
     required VoidCallback onTap,
     Color color = Colors.black87,
   }) {
-    // Wrap with Material to fix ink splash issue
     return Material(
       color: Colors.transparent,
       child: ListTile(
@@ -666,8 +679,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         trailing: const Icon(Icons.chevron_right, size: 20, color: Colors.grey),
         onTap: onTap,
-        hoverColor: const Color(0xFF1E3A8A).withValues(alpha: 0.05),
-        splashColor: const Color(0xFF1E3A8A).withValues(alpha: 0.1),
+        hoverColor: const Color(0xFF1E3A8A).withOpacity(0.05),
+        splashColor: const Color(0xFF1E3A8A).withOpacity(0.1),
       ),
     );
   }
@@ -760,7 +773,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Container(
                         height: 130,
                         width: double.infinity,
-                        color: const Color(0xFF1E3A8A).withValues(alpha: 0.2),
+                        color: const Color(0xFF1E3A8A).withOpacity(0.2),
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -797,7 +810,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.transparent,
-                        Colors.black.withValues(alpha: 0.4),
+                        Colors.black.withOpacity(0.4),
                       ],
                     ),
                   ),
@@ -832,8 +845,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: 0,
                   right: 0,
                   child: LinearProgressIndicator(
-                    value: MockData.getCourseProgressForUser(course.id),
-                    backgroundColor: Colors.white.withValues(alpha: 0.3),
+                    value: course.progress,
+                    backgroundColor: Colors.white.withOpacity(0.3),
                     color: Colors.white,
                     minHeight: 4,
                   ),
@@ -915,7 +928,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1E3A8A).withValues(alpha: 0.1),
+                          color: const Color(0xFF1E3A8A).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(

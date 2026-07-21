@@ -68,6 +68,7 @@ flutter:
     - assets/logo_dark.png
     - assets/branding.png
     - assets/branding_dark.png
+    - assets/data/courses.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:
