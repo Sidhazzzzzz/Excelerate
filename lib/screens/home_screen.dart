@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Image.asset(
-              'assets/logo.png',
+              'assets/icon/ELH.png',
               height: 28,
               errorBuilder: (context, error, stackTrace) {
                 return const Icon(Icons.school, color: Colors.white, size: 28);

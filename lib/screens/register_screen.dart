@@ -100,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Image.asset(
-                                'assets/logo.png',
+                                'assets/icon/ELH.png',
                                 errorBuilder: (context, error, stackTrace) {
                                   return const Icon(
                                     Icons.school,
