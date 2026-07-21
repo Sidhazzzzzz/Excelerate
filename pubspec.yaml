@@ -57,11 +57,11 @@ flutter_launcher_icons:
   ios: true
   web:
     generate: true
-    image_path: "assets/icon/ELH.png"
-  image_path: "assets/icon/ELH.png"
+    image_path: "assets/icon/ELH_dark.png"
+  image_path: "assets/icon/ELH_dark.png"
   remove_alpha_ios: true
-  adaptive_icon_background: "#022051"
-  adaptive_icon_foreground: "assets/icon/ELH.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/ELH_dark.png"
 
 # The following section is specific to Flutter packages.
 flutter:

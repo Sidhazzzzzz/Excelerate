@@ -4,6 +4,7 @@ import '../models/course.dart';
 import '../models/user.dart';
 import '../services/api_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/theme_aware_logo.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -163,12 +164,10 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Image.asset(
-              'assets/icon/ELH.png',
+            child: ThemeAwareLogo(
               height: 28,
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(Icons.school, color: Colors.white, size: 28);
-              },
+              width: 28,
+              errorIcon: const Icon(Icons.school, color: Colors.white, size: 28),
             ),
           ),
           const SizedBox(width: 12),
@@ -701,15 +700,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: const Color(0xFFECF2FF),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Image.asset(
-                'assets/logo.png',
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(
-                    Icons.school,
-                    size: 40,
-                    color: Color(0xFF022051),
-                  );
-                },
+              child: ThemeAwareLogo(
+                width: 80,
+                height: 80,
+                errorIcon: const Icon(
+                  Icons.school,
+                  size: 40,
+                  color: Color(0xFF022051),
+                ),
               ),
             ),
             const SizedBox(height: 16),

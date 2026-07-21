@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/mock_data.dart';
 import '../models/user.dart';
+import '../widgets/theme_aware_logo.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -99,15 +100,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: const Color(0xFFECF2FF),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Image.asset(
-                                'assets/icon/ELH.png',
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Icon(
-                                    Icons.school,
-                                    size: 24,
-                                    color: Color(0xFF022051),
-                                  );
-                                },
+                              child: ThemeAwareLogo(
+                                width: 40,
+                                height: 40,
+                                errorIcon: const Icon(
+                                  Icons.school,
+                                  size: 24,
+                                  color: Color(0xFF022051),
+                                ),
                               ),
                             ),
                             const SizedBox(width: 12),

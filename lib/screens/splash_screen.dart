@@ -1,5 +1,6 @@
 // screens/splash_screen.dart
 import 'package:flutter/material.dart';
+import '../widgets/theme_aware_logo.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -149,16 +150,15 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(28),
-                          child: Image.asset(
-                            'assets/icon/ELH.png',
+                          child: ThemeAwareLogo(
+                            width: 130,
+                            height: 130,
                             fit: BoxFit.contain,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(
-                                Icons.school,
-                                size: 65,
-                                color: Color(0xFF022051),
-                              );
-                            },
+                            errorIcon: const Icon(
+                              Icons.school,
+                              size: 65,
+                              color: Color(0xFF022051),
+                            ),
                           ),
                         ),
                       ),
