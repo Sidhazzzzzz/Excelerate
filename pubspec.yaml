@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.3.0
   flutter_native_splash: ^2.4.8
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +51,17 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  web:
+    generate: true
+    image_path: "assets/icon/ELH.png"
+  image_path: "assets/icon/ELH.png"
+  remove_alpha_ios: true
+  adaptive_icon_background: "#022051"
+  adaptive_icon_foreground: "assets/icon/ELH.png"
 
 # The following section is specific to Flutter packages.
 flutter:
