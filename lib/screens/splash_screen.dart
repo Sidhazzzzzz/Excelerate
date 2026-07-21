@@ -1,4 +1,3 @@
-// screens/splash_screen.dart
 import 'package:flutter/material.dart';
 import '../widgets/theme_aware_logo.dart';
 
@@ -141,7 +140,9 @@ class _SplashScreenState extends State<SplashScreen>
                           borderRadius: BorderRadius.circular(28),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF022051).withValues(alpha: 0.12),
+                              color: const Color(
+                                0xFF022051,
+                              ).withValues(alpha: 0.12),
                               blurRadius: 35,
                               spreadRadius: 6,
                               offset: const Offset(0, 8),

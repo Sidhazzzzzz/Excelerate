@@ -1,4 +1,3 @@
-// models/course.dart
 import 'package:excelerate/models/module.dart';
 
 class Course {

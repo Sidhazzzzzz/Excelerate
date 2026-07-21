@@ -1,4 +1,3 @@
-// screens/login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../data/mock_data.dart';
@@ -316,7 +315,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
                               width: 20,
                               height: 20,
-                              placeholderBuilder: (context) => const Icon(Icons.g_mobiledata),
+                              placeholderBuilder: (context) =>
+                                  const Icon(Icons.g_mobiledata),
                             ),
                           ),
                           label: const Text(
