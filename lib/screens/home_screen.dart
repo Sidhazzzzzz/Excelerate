@@ -15,13 +15,30 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<Course> _filteredCourses = [];
   bool _isSearching = false;
+  bool _isLoading = true;
+  String? _loadError;
 
   User get _currentUser => MockData.currentUser;
 
   @override
   void initState() {
     super.initState();
-    _filteredCourses = MockData.recommendedCourses;
+    _loadCourses();
+  }
+
+  Future<void> _loadCourses() async {
+    try {
+      await MockData.ensureCoursesLoaded();
+      setState(() {
+        _filteredCourses = MockData.recommendedCourses;
+        _isLoading = false;
+      });
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+        _loadError = 'Unable to load courses. Please restart the app.';
+      });
+    }
   }
 
   void _filterCourses(String query) {
@@ -334,38 +351,54 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       // Course List
                       Expanded(
-                        child: _filteredCourses.isEmpty
+                        child: _isLoading
                             ? const Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.search_off,
-                                      size: 64,
-                                      color: Colors.grey,
-                                    ),
-                                    SizedBox(height: 16),
-                                    Text(
-                                      'No courses found',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                child: CircularProgressIndicator(),
                               )
-                            : ListView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 8,
-                                ),
-                                itemCount: _filteredCourses.length,
-                                itemBuilder: (context, index) {
-                                  final course = _filteredCourses[index];
-                                  return _buildCourseCard(course);
-                                },
-                              ),
+                            : _loadError != null
+                                ? Center(
+                                    child: Text(
+                                      _loadError!,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.red,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                : _filteredCourses.isEmpty
+                                    ? const Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.search_off,
+                                              size: 64,
+                                              color: Colors.grey,
+                                            ),
+                                            SizedBox(height: 16),
+                                            Text(
+                                              'No courses found',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : ListView.builder(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 8,
+                                        ),
+                                        itemCount: _filteredCourses.length,
+                                        itemBuilder: (context, index) {
+                                          final course = _filteredCourses[index];
+                                          return _buildCourseCard(course);
+                                        },
+                                      ),
                       ),
                     ],
                   ),
