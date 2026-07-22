@@ -1,7 +1,9 @@
 // data/mock_data.dart
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
+
 import '../models/course.dart';
-import '../models/module.dart';
-import '../models/lesson.dart';
 import '../models/user.dart';
 
 class MockData {
@@ -22,257 +24,20 @@ class MockData {
     lastLogin: DateTime.now(),
   );
 
-  static final List<Course> recommendedCourses = [
-    Course(
-      id: '1',
-      title: 'Intro to Programming',
-      author: 'alison smith',
-      description:
-          'Learn the fundamentals of programming including variables, loops, functions, and object-oriented programming. This course is designed for absolute beginners with no prior coding experience.',
-      imageUrl: 'assets/images/introprog.png', // Local image
-      duration: '4 Hr',
-      isFree: true,
-      progress: 0.45,
-      studentCount: 1245,
-      rating: 4.8,
-      reviewCount: 342,
-      modules: [
-        Module(
-          id: 'm1',
-          title: 'Getting Started',
-          description:
-              'Introduction to programming concepts and setting up your environment.',
-          order: 1,
-          duration: '45 min',
-          isCompleted: true,
-          lessons: [
-            Lesson(
-              id: 'l1',
-              title: 'What is Programming?',
-              description: 'Understanding the basics of programming',
-              order: 1,
-              duration: '15 min',
-              isCompleted: true,
-              type: LessonType.video,
-            ),
-            Lesson(
-              id: 'l2',
-              title: 'Setting Up Your Environment',
-              description: 'Install the necessary tools',
-              order: 2,
-              duration: '30 min',
-              isCompleted: false,
-              type: LessonType.video,
-            ),
-          ],
-        ),
-        Module(
-          id: 'm2',
-          title: 'Variables & Data Types',
-          description:
-              'Understanding variables, strings, numbers, and booleans.',
-          order: 2,
-          duration: '1 Hr',
-          isCompleted: false,
-          lessons: [
-            Lesson(
-              id: 'l3',
-              title: 'Variables in Programming',
-              description: 'Learn about variables',
-              order: 1,
-              duration: '20 min',
-              isCompleted: false,
-              type: LessonType.video,
-            ),
-            Lesson(
-              id: 'l4',
-              title: 'Data Types Explained',
-              description: 'Understanding different data types',
-              order: 2,
-              duration: '40 min',
-              isCompleted: false,
-              type: LessonType.video,
-            ),
-          ],
-        ),
-        Module(
-          id: 'm3',
-          title: 'Control Flow',
-          description: 'Conditional statements and loops.',
-          order: 3,
-          duration: '1.5 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm4',
-          title: 'Functions & OOP',
-          description:
-              'Writing reusable code with functions and understanding objects.',
-          order: 4,
-          duration: '1.5 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-      ],
-    ),
-    Course(
-      id: '2',
-      title: 'Wireframing Basics',
-      author: 'Dr. Smith',
-      description:
-          'Master the art of wireframing for UI/UX design. Learn how to create low-fidelity and high-fidelity wireframes that effectively communicate your design ideas.',
-      imageUrl: 'assets/images/wireframing.png', // Local image
-      duration: '3 Hr',
-      isFree: true,
-      progress: 0.15,
-      studentCount: 876,
-      rating: 4.6,
-      reviewCount: 189,
-      modules: [
-        Module(
-          id: 'm5',
-          title: 'Introduction to Wireframing',
-          description: 'What are wireframes and why they matter.',
-          order: 1,
-          duration: '30 min',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm6',
-          title: 'Low-Fidelity Wireframes',
-          description: 'Creating quick sketches and paper prototypes.',
-          order: 2,
-          duration: '1 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm7',
-          title: 'High-Fidelity Wireframes',
-          description: 'Using digital tools to create polished wireframes.',
-          order: 3,
-          duration: '1 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm8',
-          title: 'User Testing',
-          description: 'Validating your wireframes with users.',
-          order: 4,
-          duration: '30 min',
-          isCompleted: false,
-          lessons: [],
-        ),
-      ],
-    ),
-    Course(
-      id: '3',
-      title: 'Flutter for Beginners',
-      author: 'Sarah Johnson',
-      description:
-          'Build beautiful cross-platform mobile apps with Flutter. This course covers everything from setup to building your first complete app.',
-      imageUrl: 'assets/images/flutter.png', // Local image
-      duration: '6 Hr',
-      isFree: false,
-      progress: 0.0,
-      studentCount: 2341,
-      rating: 4.9,
-      reviewCount: 567,
-      modules: [
-        Module(
-          id: 'm9',
-          title: 'Flutter Setup',
-          description: 'Installing Flutter and setting up your IDE.',
-          order: 1,
-          duration: '45 min',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm10',
-          title: 'Dart Basics',
-          description: 'Understanding the Dart programming language.',
-          order: 2,
-          duration: '1.5 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm11',
-          title: 'Widgets & Layouts',
-          description: 'Exploring Flutter\'s widget system.',
-          order: 3,
-          duration: '2 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm12',
-          title: 'State Management',
-          description: 'Managing app state effectively.',
-          order: 4,
-          duration: '2 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-      ],
-    ),
-    Course(
-      id: '4',
-      title: 'Python Programming',
-      author: 'Dr. Smith',
-      description:
-          'Master Python programming from basics to advanced concepts. Learn data structures, algorithms, and build real-world applications.',
-      imageUrl: 'assets/images/python.png', // Local image
-      duration: '8 Hr',
-      isFree: true,
-      progress: 0.0,
-      studentCount: 1890,
-      rating: 4.7,
-      reviewCount: 423,
-      modules: [
-        Module(
-          id: 'm13',
-          title: 'Python Basics',
-          description: 'Getting started with Python syntax and basic concepts.',
-          order: 1,
-          duration: '2 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm14',
-          title: 'Data Structures',
-          description: 'Lists, dictionaries, sets, and tuples in Python.',
-          order: 2,
-          duration: '2.5 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm15',
-          title: 'Functions & Modules',
-          description: 'Writing reusable code with functions and modules.',
-          order: 3,
-          duration: '2 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-        Module(
-          id: 'm16',
-          title: 'File Handling & APIs',
-          description: 'Working with files and APIs in Python.',
-          order: 4,
-          duration: '1.5 Hr',
-          isCompleted: false,
-          lessons: [],
-        ),
-      ],
-    ),
-  ];
+  static List<Course> recommendedCourses = [];
+  static bool _coursesLoaded = false;
+
+  static Future<void> ensureCoursesLoaded() async {
+    if (_coursesLoaded) return;
+
+    final jsonText = await rootBundle.loadString('assets/data/courses.json');
+    final Map<String, dynamic> jsonData = json.decode(jsonText);
+    recommendedCourses = (jsonData['courses'] as List<dynamic>)
+        .map((courseJson) => Course.fromJson(courseJson as Map<String, dynamic>))
+        .toList();
+
+    _coursesLoaded = true;
+  }
 
   // Pre-defined users for login simulation
   static final List<User> registeredUsers = [
@@ -437,7 +202,18 @@ class MockData {
   }
 
   static Course getCourseById(String id) {
-    return recommendedCourses.firstWhere((course) => course.id == id);
+    return recommendedCourses.firstWhere(
+      (course) => course.id == id,
+      orElse: () => Course(
+        id: '',
+        title: 'Course Not Found',
+        author: '',
+        description: 'Unable to load the selected course.',
+        imageUrl: 'assets/images/introprog.png',
+        duration: '',
+        isFree: true,
+      ),
+    );
   }
 
   static List<Course> getCoursesByAuthor(String author) {
