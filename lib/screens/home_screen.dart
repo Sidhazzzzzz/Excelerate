@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: ThemeAwareLogo(
@@ -193,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Row(
@@ -313,7 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1E3A8A).withOpacity(0.1),
+                      color: const Color(0xFF1E3A8A).withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -333,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(14),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -453,10 +453,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                         width: 3,
                       ),
                     ),
@@ -480,7 +480,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _currentUser.email,
                     style: TextStyle(
                       fontSize: 13,
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.white.withValues(alpha: 0.7),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -652,7 +652,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         Text(
           label,
-          style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.7)),
+          style: TextStyle(fontSize: 12, color: Colors.white.withValues(alpha: 0.7)),
         ),
       ],
     );
@@ -678,8 +678,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         trailing: const Icon(Icons.chevron_right, size: 20, color: Colors.grey),
         onTap: onTap,
-        hoverColor: const Color(0xFF1E3A8A).withOpacity(0.05),
-        splashColor: const Color(0xFF1E3A8A).withOpacity(0.1),
+        hoverColor: const Color(0xFF1E3A8A).withValues(alpha: 0.05),
+        splashColor: const Color(0xFF1E3A8A).withValues(alpha: 0.1),
       ),
     );
   }
@@ -771,7 +771,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Container(
                         height: 130,
                         width: double.infinity,
-                        color: const Color(0xFF1E3A8A).withOpacity(0.2),
+                        color: const Color(0xFF1E3A8A).withValues(alpha: 0.2),
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -808,7 +808,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.transparent,
-                        Colors.black.withOpacity(0.4),
+                        Colors.black.withValues(alpha: 0.4),
                       ],
                     ),
                   ),
@@ -844,7 +844,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   right: 0,
                   child: LinearProgressIndicator(
                     value: course.progress,
-                    backgroundColor: Colors.white.withOpacity(0.3),
+                    backgroundColor: Colors.white.withValues(alpha: 0.3),
                     color: Colors.white,
                     minHeight: 4,
                   ),
@@ -926,7 +926,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1E3A8A).withOpacity(0.1),
+                          color: const Color(0xFF1E3A8A).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(

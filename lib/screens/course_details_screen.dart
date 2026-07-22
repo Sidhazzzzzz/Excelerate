@@ -251,7 +251,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
             return Container(
               height: 250,
               width: double.infinity,
-              color: const Color(0xFF1E3A8A).withOpacity(0.2),
+              color: const Color(0xFF1E3A8A).withValues(alpha: 0.2),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -279,7 +279,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+              colors: [Colors.transparent, Colors.black.withValues(alpha: 0.7)],
             ),
           ),
         ),
@@ -294,7 +294,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   : Colors.orange.shade600,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 10),
+                BoxShadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 10),
               ],
             ),
             child: Row(
@@ -438,7 +438,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           decoration: BoxDecoration(
             color: const Color(0xFFECF2FF),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFF1E3A8A).withOpacity(0.1)),
+            border: Border.all(color: const Color(0xFF1E3A8A).withValues(alpha: 0.1)),
           ),
           child: Text(
             course.description,
@@ -497,7 +497,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       decoration: BoxDecoration(
         color: const Color(0xFFECF2FF),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFF1E3A8A).withOpacity(0.1)),
+        border: Border.all(color: const Color(0xFF1E3A8A).withValues(alpha: 0.1)),
       ),
       child: Column(
         children: [
@@ -525,12 +525,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            const Color(0xFF022051).withOpacity(0.05),
-            const Color(0xFF1E3A8A).withOpacity(0.05),
+            const Color(0xFF022051).withValues(alpha: 0.05),
+            const Color(0xFF1E3A8A).withValues(alpha: 0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF1E3A8A).withOpacity(0.1)),
+        border: Border.all(color: const Color(0xFF1E3A8A).withValues(alpha: 0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -677,7 +677,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                   side: BorderSide(
-                    color: const Color(0xFF1E3A8A).withOpacity(0.3),
+                    color: const Color(0xFF1E3A8A).withValues(alpha: 0.3),
                   ),
                 ),
               ),
@@ -703,7 +703,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         side: BorderSide(
           color: isCompleted
               ? Colors.green.shade200
-              : const Color(0xFF1E3A8A).withOpacity(0.1),
+              : const Color(0xFF1E3A8A).withValues(alpha: 0.1),
           width: isCompleted ? 2 : 1,
         ),
       ),
@@ -836,7 +836,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           decoration: BoxDecoration(
             color: const Color(0xFFECF2FF),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFF1E3A8A).withOpacity(0.2)),
+            border: Border.all(color: const Color(0xFF1E3A8A).withValues(alpha: 0.2)),
           ),
           child: IconButton(
             icon: const Icon(Icons.download_outlined, color: Color(0xFF1E3A8A)),

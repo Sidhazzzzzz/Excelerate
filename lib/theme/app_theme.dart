@@ -32,13 +32,11 @@ class AppTheme {
     colorScheme: const ColorScheme.light(
       primary: primaryBlue,
       secondary: primaryAccent,
-      surface: Colors.white,
-      background: primaryLight,
+      surface: primaryLight,
       error: errorColor,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: textPrimary,
-      onBackground: textPrimary,
     ),
 
     // Scaffold Background
@@ -220,7 +218,7 @@ class AppTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       clipBehavior: Clip.antiAlias,
       color: Colors.white,
-      shadowColor: Colors.black.withOpacity(0.05),
+      shadowColor: Colors.black.withValues(alpha: 0.05),
     ),
 
     // Chip Theme
@@ -276,9 +274,9 @@ class AppTheme {
 
     // Scrollbar Theme
     scrollbarTheme: ScrollbarThemeData(
-      thumbColor: MaterialStateProperty.all(primaryBlue.withOpacity(0.5)),
+      thumbColor: WidgetStateProperty.all(primaryBlue.withValues(alpha: 0.5)),
       radius: const Radius.circular(4),
-      thickness: MaterialStateProperty.all(6),
+      thickness: WidgetStateProperty.all(6),
     ),
 
     // Dialog Theme
