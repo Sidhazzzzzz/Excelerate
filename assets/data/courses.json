@@ -3,7 +3,7 @@
     {
       "id": "1",
       "title": "Intro to Programming",
-      "author": "Alison Smith",
+      "author": "Edvin",
       "description": "Learn the fundamentals of programming including variables, loops, functions, and object-oriented programming. This course is designed for absolute beginners with no prior coding experience.",
       "imageUrl": "assets/images/introprog.png",
       "duration": "4 Hr",
@@ -12,7 +12,6 @@
       "studentCount": 1245,
       "rating": 4.8,
       "reviewCount": 342,
-      "createdAt": "2024-01-14T10:00:00.000Z",
       "modules": [
         {
           "id": "m1",
@@ -25,20 +24,18 @@
             {
               "id": "l1",
               "title": "What is Programming?",
-              "description": "Understanding the basics of programming.",
+              "description": "Understanding the basics of programming",
               "order": 1,
               "duration": "15 min",
-              "videoUrl": "",
               "isCompleted": true,
               "type": "video"
             },
             {
               "id": "l2",
               "title": "Setting Up Your Environment",
-              "description": "Install the necessary tools.",
+              "description": "Install the necessary tools",
               "order": 2,
               "duration": "30 min",
-              "videoUrl": "",
               "isCompleted": false,
               "type": "video"
             }
@@ -55,20 +52,18 @@
             {
               "id": "l3",
               "title": "Variables in Programming",
-              "description": "Learn about variables.",
+              "description": "Learn about variables",
               "order": 1,
               "duration": "20 min",
-              "videoUrl": "",
               "isCompleted": false,
               "type": "video"
             },
             {
               "id": "l4",
               "title": "Data Types Explained",
-              "description": "Understanding different data types.",
+              "description": "Understanding different data types",
               "order": 2,
               "duration": "40 min",
-              "videoUrl": "",
               "isCompleted": false,
               "type": "video"
             }
@@ -106,7 +101,6 @@
       "studentCount": 876,
       "rating": 4.6,
       "reviewCount": 189,
-      "createdAt": "2024-02-03T08:30:00.000Z",
       "modules": [
         {
           "id": "m5",
@@ -158,7 +152,6 @@
       "studentCount": 2341,
       "rating": 4.9,
       "reviewCount": 567,
-      "createdAt": "2024-03-20T14:45:00.000Z",
       "modules": [
         {
           "id": "m9",
@@ -201,7 +194,7 @@
     {
       "id": "4",
       "title": "Python Programming",
-      "author": "Dr. Smith",
+      "author": "John Doe",
       "description": "Master Python programming from basics to advanced concepts. Learn data structures, algorithms, and build real-world applications.",
       "imageUrl": "assets/images/python.png",
       "duration": "8 Hr",
@@ -210,7 +203,6 @@
       "studentCount": 1890,
       "rating": 4.7,
       "reviewCount": 423,
-      "createdAt": "2024-04-05T11:20:00.000Z",
       "modules": [
         {
           "id": "m13",

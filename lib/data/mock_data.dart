@@ -124,28 +124,6 @@ class MockData {
     currentUser = registeredUsers.first;
   }
 
-  // Get user by username
-  static User? getUserByUsername(String username) {
-    try {
-      return registeredUsers.firstWhere(
-        (user) => user.username.toLowerCase() == username.toLowerCase(),
-      );
-    } catch (e) {
-      return null;
-    }
-  }
-
-  // Get user by email
-  static User? getUserByEmail(String email) {
-    try {
-      return registeredUsers.firstWhere(
-        (user) => user.email.toLowerCase() == email.toLowerCase(),
-      );
-    } catch (e) {
-      return null;
-    }
-  }
-
   // Check if username exists
   static bool isUsernameExists(String username) {
     return registeredUsers.any(

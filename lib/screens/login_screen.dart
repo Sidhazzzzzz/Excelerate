@@ -1,7 +1,7 @@
-// screens/login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../data/mock_data.dart';
+import '../widgets/theme_aware_logo.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -65,16 +65,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
-                      child: Image.asset(
-                        'assets/logo.png',
+                      child: ThemeAwareLogo(
+                        width: 120,
+                        height: 120,
                         fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
-                            Icons.school,
-                            size: 60,
-                            color: Colors.white,
-                          );
-                        },
+                        errorIcon: const Icon(
+                          Icons.school,
+                          size: 60,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -316,7 +315,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
                               width: 20,
                               height: 20,
-                              placeholderBuilder: (context) => const Icon(Icons.g_mobiledata),
+                              placeholderBuilder: (context) =>
+                                  const Icon(Icons.g_mobiledata),
                             ),
                           ),
                           label: const Text(
@@ -354,15 +354,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.white.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Image.asset(
-                            'assets/logo.png',
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(
-                                Icons.school,
-                                size: 24,
-                                color: Colors.white,
-                              );
-                            },
+                          child: ThemeAwareLogo(
+                            width: 40,
+                            height: 40,
+                            errorIcon: const Icon(
+                              Icons.school,
+                              size: 24,
+                              color: Colors.white,
+                            ),
                           ),
                         );
                       },

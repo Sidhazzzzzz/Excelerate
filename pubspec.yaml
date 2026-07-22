@@ -38,7 +38,6 @@ dependencies:
   flutter_native_splash: ^2.4.8
   flutter_launcher_icons: ^0.14.4
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -52,6 +51,17 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  web:
+    generate: true
+    image_path: "assets/icon/ELH_dark.png"
+  image_path: "assets/icon/ELH_dark.png"
+  remove_alpha_ios: true
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/ELH_dark.png"
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -70,6 +80,8 @@ flutter:
     - assets/logo_dark.png
     - assets/branding.png
     - assets/branding_dark.png
+    - assets/icon/ELH.png
+    - assets/icon/ELH_dark.png
     - assets/data/courses.json
 
   # To add assets to your application, add an assets section, like this:
