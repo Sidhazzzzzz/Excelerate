@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import '../models/course.dart';
-import '../models/module.dart';
-import '../models/lesson.dart';
+
 
 class ApiService {
   static final ApiService _instance = ApiService._internal();

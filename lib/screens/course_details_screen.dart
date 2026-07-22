@@ -3,7 +3,7 @@ import '../data/mock_data.dart';
 import '../models/course.dart';
 import '../models/module.dart';
 import '../services/api_service.dart';
-import '../theme/app_theme.dart';
+
 
 class CourseDetailsScreen extends StatefulWidget {
   const CourseDetailsScreen({super.key});
@@ -916,6 +916,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   void _handleStartLearning() async {
     setState(() => _isLoadingAction = true);
     await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
     setState(() => _isLoadingAction = false);
 
     ScaffoldMessenger.of(context).showSnackBar(

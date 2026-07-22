@@ -3,7 +3,7 @@ import '../data/mock_data.dart';
 import '../models/course.dart';
 import '../models/user.dart';
 import '../services/api_service.dart';
-import '../theme/app_theme.dart';
+
 import '../widgets/theme_aware_logo.dart';
 
 class HomeScreen extends StatefulWidget {
