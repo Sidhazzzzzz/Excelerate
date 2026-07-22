@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/mock_data.dart';
+
 import '../models/course.dart';
 import '../models/module.dart';
 import '../services/api_service.dart';
