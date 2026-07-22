@@ -119,17 +119,3 @@ class ApiService {
   }
 }
 
-// Free API alternative (if you want to use a real API)
-class FreeApiService {
-  static const String baseUrl = 'https://jsonplaceholder.typicode.com';
-
-  // You can use this to fetch from a real API
-  // Future<List<Course>> fetchCourses() async {
-  //   final response = await http.get(Uri.parse('$baseUrl/posts'));
-  //   if (response.statusCode == 200) {
-  //     // Parse and convert to Course objects
-  //   } else {
-  //     throw Exception('Failed to load courses');
-  //   }
-  // }
-}
