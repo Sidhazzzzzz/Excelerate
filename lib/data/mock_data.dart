@@ -1,9 +1,5 @@
 // data/mock_data.dart
-import 'dart:convert';
 
-import 'package:flutter/services.dart';
-
-import '../models/course.dart';
 import '../models/user.dart';
 
 class MockData {
@@ -24,20 +20,7 @@ class MockData {
     lastLogin: DateTime.now(),
   );
 
-  static List<Course> recommendedCourses = [];
-  static bool _coursesLoaded = false;
 
-  static Future<void> ensureCoursesLoaded() async {
-    if (_coursesLoaded) return;
-
-    final jsonText = await rootBundle.loadString('assets/data/courses.json');
-    final Map<String, dynamic> jsonData = json.decode(jsonText);
-    recommendedCourses = (jsonData['courses'] as List<dynamic>)
-        .map((courseJson) => Course.fromJson(courseJson as Map<String, dynamic>))
-        .toList();
-
-    _coursesLoaded = true;
-  }
 
   // Pre-defined users for login simulation
   static final List<User> registeredUsers = [
@@ -152,69 +135,9 @@ class MockData {
     return true;
   }
 
-  // Get enrolled courses for current user
-  static List<Course> getEnrolledCourses() {
-    return recommendedCourses
-        .where((course) => currentUser.enrolledCourseIds.contains(course.id))
-        .toList();
-  }
-
-  // Get completed courses for current user
-  static List<Course> getCompletedCoursesForUser() {
-    return recommendedCourses
-        .where((course) => currentUser.completedCourseIds.contains(course.id))
-        .toList();
-  }
-
-  // Get in-progress courses for current user
-  static List<Course> getInProgressCoursesForUser() {
-    return recommendedCourses.where((course) {
-      final progress = currentUser.courseProgress[course.id] ?? 0.0;
-      return progress > 0 && progress < 1.0;
-    }).toList();
-  }
 
   // Get course progress for current user
   static double getCourseProgressForUser(String courseId) {
     return currentUser.courseProgress[courseId] ?? 0.0;
-  }
-
-  static Course getCourseById(String id) {
-    return recommendedCourses.firstWhere(
-      (course) => course.id == id,
-      orElse: () => Course(
-        id: '',
-        title: 'Course Not Found',
-        author: '',
-        description: 'Unable to load the selected course.',
-        imageUrl: 'assets/images/introprog.png',
-        duration: '',
-        isFree: true,
-      ),
-    );
-  }
-
-  static List<Course> getCoursesByAuthor(String author) {
-    return recommendedCourses
-        .where((course) => course.author.contains(author))
-        .toList();
-  }
-
-  static List<Course> getFreeCourses() {
-    return recommendedCourses.where((course) => course.isFree).toList();
-  }
-
-  static List<Course> getPremiumCourses() {
-    return recommendedCourses.where((course) => !course.isFree).toList();
-  }
-
-  static List<Course> getInProgressCourses() {
-    return recommendedCourses
-        .where((course) => course.progress > 0 && course.progress < 1)
-        .toList();
-  }
-
-  static List<Course> getCompletedCourses() {
-    return recommendedCourses.where((course) => course.progress >= 1).toList();
   }
 }

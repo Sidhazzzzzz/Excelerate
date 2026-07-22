@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data/mock_data.dart';
 
 import '../models/course.dart';
 import '../models/module.dart';
@@ -917,6 +918,15 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     setState(() => _isLoadingAction = true);
     await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
+    
+    // Add to enrolled courses and set initial progress
+    if (_course != null) {
+      if (!MockData.currentUser.enrolledCourseIds.contains(_course!.id)) {
+        MockData.currentUser.enrolledCourseIds.add(_course!.id);
+        MockData.currentUser.courseProgress[_course!.id] = 0.05; // Initial progress
+      }
+    }
+    
     setState(() => _isLoadingAction = false);
 
     ScaffoldMessenger.of(context).showSnackBar(
