@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+
 class User {
   final String id;
+  final String uid;
   final String username;
   final String email;
   final String phoneNumber;
@@ -15,6 +18,7 @@ class User {
 
   User({
     required this.id,
+    required this.uid,
     required this.username,
     required this.email,
     this.phoneNumber = '',
@@ -30,10 +34,34 @@ class User {
   }) : createdAt = createdAt ?? DateTime.now(),
        lastLogin = lastLogin ?? DateTime.now();
 
+  factory User.fromFirebaseUser(
+    firebase_auth.User fbUser, {
+    String username = '',
+    String phoneNumber = '',
+  }) {
+    return User(
+      id: fbUser.uid,
+      uid: fbUser.uid,
+      username: username.isNotEmpty ? username : (fbUser.email ?? ''),
+      email: fbUser.email ?? '',
+      phoneNumber: phoneNumber,
+      fullName: '',
+      profileImageUrl: fbUser.photoURL ?? '',
+      role: UserRole.student,
+      isActive: true,
+      enrolledCourseIds: const [],
+      completedCourseIds: const [],
+      courseProgress: const {},
+      createdAt: fbUser.metadata.creationTime ?? DateTime.now(),
+      lastLogin: DateTime.now(),
+    );
+  }
+
   // Factory constructor for creating a User from JSON
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] ?? '',
+      uid: json['uid'] ?? json['id'] ?? '',
       username: json['username'] ?? '',
       email: json['email'] ?? '',
       phoneNumber: json['phoneNumber'] ?? '',
@@ -60,6 +88,7 @@ class User {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'uid': uid,
       'username': username,
       'email': email,
       'phoneNumber': phoneNumber,
@@ -78,6 +107,7 @@ class User {
   // Copy with method
   User copyWith({
     String? id,
+    String? uid,
     String? username,
     String? email,
     String? phoneNumber,
@@ -93,6 +123,7 @@ class User {
   }) {
     return User(
       id: id ?? this.id,
+      uid: uid ?? this.uid,
       username: username ?? this.username,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../data/mock_data.dart';
-import '../models/course.dart';
-import '../models/user.dart';
-import '../services/api_service.dart';
+import '../../data/mock_data.dart';
+import '../../data/models/course.dart';
+import '../../data/models/user.dart';
+import '../../data/services/api_service.dart';
+import '../../data/services/auth_service.dart';
 
-import '../widgets/theme_aware_logo.dart';
+import '../../core/widgets/theme_aware_logo.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -87,8 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Text('Cancel'),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              await AuthService().logout();
               MockData.logout();
+              if (!context.mounted) return;
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, '/login');
             },

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import '../widgets/theme_aware_logo.dart';
-import '../services/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import '../../core/widgets/theme_aware_logo.dart';
+import '../../data/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import '../../data/models/user.dart';
+import '../../data/mock_data.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -472,6 +475,15 @@ void _handleRegister() async {
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
     );
+
+    final fbUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    if (fbUser != null) {
+      MockData.currentUser = User.fromFirebaseUser(
+        fbUser,
+        username: _usernameController.text.trim(),
+        phoneNumber: _phoneController.text.trim(),
+      );
+    }
 
     if (!mounted) return;
 

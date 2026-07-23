@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../services/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../widgets/theme_aware_logo.dart';
+import '../../data/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import '../../core/widgets/theme_aware_logo.dart';
+import '../../data/models/user.dart';
+import '../../data/mock_data.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -424,6 +427,11 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordController.text.trim(),
       );
 
+      final fbUser = firebase_auth.FirebaseAuth.instance.currentUser;
+      if (fbUser != null) {
+        MockData.currentUser = User.fromFirebaseUser(fbUser);
+      }
+
       if (!mounted) return;
 
       Navigator.pushReplacementNamed(context, '/home');
@@ -457,6 +465,11 @@ class _LoginScreenState extends State<LoginScreen> {
   try {
     await AuthService().signInWithGoogle();
 
+    final fbUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    if (fbUser != null) {
+      MockData.currentUser = User.fromFirebaseUser(fbUser);
+    }
+
     if (!mounted) return;
 
     Navigator.pushReplacementNamed(context, '/home');
@@ -486,13 +499,27 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _showForgotPasswordDialog(BuildContext context) {
+    final resetEmailController = TextEditingController(text: _emailController.text);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Reset Password'),
-        content: const Text(
-          'Enter your email address and we\'ll send you a link to reset your password.',
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Enter your email address and we\'ll send you a link to reset your password.',
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: resetEmailController,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
         ),
         actions: [
           TextButton(
@@ -500,14 +527,25 @@ class _LoginScreenState extends State<LoginScreen> {
             child: const Text('Cancel'),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              final email = resetEmailController.text.trim();
+              if (email.isEmpty) return;
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Password reset link sent to your email!'),
-                  backgroundColor: Colors.green,
-                ),
-              );
+              try {
+                await AuthService().sendPasswordReset(email);
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Password reset email sent. Check your inbox.')),
+                );
+              } on FirebaseAuthException catch (e) {
+                if (!context.mounted) return;
+                String message = 'Could not send reset email';
+                if (e.code == 'user-not-found') message = 'No account found with this email';
+                if (e.code == 'invalid-email') message = 'Invalid email address';
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(message), backgroundColor: Colors.red),
+                );
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF1E3A8A),
