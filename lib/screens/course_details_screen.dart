@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../data/mock_data.dart';
+import '../data/mock_data.dart';
 
-import '../../data/models/course.dart';
-import '../../data/models/module.dart';
-import '../../data/services/api_service.dart';
+import '../models/course.dart';
+import '../models/module.dart';
+import '../services/api_service.dart';
 
 
 class CourseDetailsScreen extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:excelerate/data/models/module.dart';
+import 'package:excelerate/models/module.dart';
 
 class Course {
   final String id;

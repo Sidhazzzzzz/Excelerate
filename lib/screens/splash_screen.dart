@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/widgets/theme_aware_logo.dart';
+import '../widgets/theme_aware_logo.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class SplashScreen extends StatefulWidget {
