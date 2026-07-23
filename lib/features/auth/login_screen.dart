@@ -413,7 +413,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  
 
       // Try to login with the provided username
     void _handleLogin() async {
