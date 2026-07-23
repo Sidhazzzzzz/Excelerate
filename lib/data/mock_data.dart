@@ -1,11 +1,12 @@
 // data/mock_data.dart
 
-import '../models/user.dart';
+import 'models/user.dart';
 
 class MockData {
   // Current logged-in user
   static User currentUser = User(
     id: 'u1',
+    uid: 'u1',
     username: 'alex_johnson',
     email: 'alex@example.com',
     phoneNumber: '+92 300 1234567',
@@ -26,6 +27,7 @@ class MockData {
   static final List<User> registeredUsers = [
     User(
       id: 'u1',
+    uid: 'u1',
       username: 'alex_johnson',
       email: 'alex@example.com',
       phoneNumber: '+92 300 1234567',
@@ -41,6 +43,7 @@ class MockData {
     ),
     User(
       id: 'u2',
+      uid: 'u2',
       username: 'sarah_miller',
       email: 'sarah@example.com',
       phoneNumber: '+92 300 9876543',
@@ -56,6 +59,7 @@ class MockData {
     ),
     User(
       id: 'u3',
+      uid: 'u3',
       username: 'michael_khan',
       email: 'michael@example.com',
       phoneNumber: '+92 333 1234567',
@@ -71,6 +75,7 @@ class MockData {
     ),
     User(
       id: 'u4',
+      uid: 'u4',
       username: 'emma_watson',
       email: 'emma@example.com',
       phoneNumber: '+92 344 7654321',
@@ -86,54 +91,13 @@ class MockData {
     ),
   ];
 
-  // Login method
-  static bool login(String username, String password) {
-    User? user;
-    try {
-      user = registeredUsers.firstWhere(
-        (u) => u.username.toLowerCase() == username.toLowerCase(),
-      );
-    } catch (e) {
-      return false;
-    }
-
-    currentUser = user.copyWith(lastLogin: DateTime.now());
-
-    return true;
-  }
 
   // Logout method
   static void logout() {
     currentUser = registeredUsers.first;
   }
 
-  // Check if username exists
-  static bool isUsernameExists(String username) {
-    return registeredUsers.any(
-      (user) => user.username.toLowerCase() == username.toLowerCase(),
-    );
-  }
 
-  // Check if email exists
-  static bool isEmailExists(String email) {
-    return registeredUsers.any(
-      (user) => user.email.toLowerCase() == email.toLowerCase(),
-    );
-  }
-
-  // Register new user
-  static bool registerUser(User newUser) {
-    if (isUsernameExists(newUser.username)) {
-      return false;
-    }
-    if (isEmailExists(newUser.email)) {
-      return false;
-    }
-
-    registeredUsers.add(newUser);
-    currentUser = newUser;
-    return true;
-  }
 
 
   // Get course progress for current user

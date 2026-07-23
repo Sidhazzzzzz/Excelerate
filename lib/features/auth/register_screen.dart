@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import '../data/mock_data.dart';
-import '../models/user.dart';
-import '../widgets/theme_aware_logo.dart';
+import '../../core/widgets/theme_aware_logo.dart';
+import '../../data/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import '../../data/models/user.dart';
+import '../../data/mock_data.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -458,62 +461,62 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _handleRegister() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
-      await Future.delayed(Duration(seconds: double.parse("1.5").toInt()));
-      if (!mounted) return;
-      
-      final newUser = User(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        username: _usernameController.text,
-        email: _emailController.text,
-        phoneNumber: _phoneController.text,
+ 
+void _handleRegister() async {
+  if (!_acceptTerms) return;
+
+  if (!_formKey.currentState!.validate()) return;
+
+  setState(() => _isLoading = true);
+
+
+  try {
+    await AuthService().register(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+
+    final fbUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    if (fbUser != null) {
+      MockData.currentUser = User.fromFirebaseUser(
+        fbUser,
+        username: _usernameController.text.trim(),
+        phoneNumber: _phoneController.text.trim(),
       );
-      
-      final success = MockData.registerUser(newUser);
-      
+    }
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Registration Successful!"),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    Navigator.pushReplacementNamed(context, '/home');
+  } on FirebaseAuthException catch (e) {
+    String message = "Registration Failed";
+
+    if (e.code == 'email-already-in-use') {
+      message = "Email already exists.";
+    } else if (e.code == 'weak-password') {
+      message = "Password is too weak.";
+    } else if (e.code == 'invalid-email') {
+      message = "Invalid email.";
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+  } finally {
+    if (mounted) {
       setState(() => _isLoading = false);
-
-      if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Row(
-              children: [
-                Icon(Icons.check_circle, color: Colors.white),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    'Registration successful! Welcome to Excelerate! 🎉',
-                  ),
-                ),
-              ],
-            ),
-            backgroundColor: Colors.green,
-            duration: Duration(seconds: 3),
-          ),
-        );
-
-        Navigator.pushReplacementNamed(context, '/home');
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Username or email already exists. Please try another.'),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
     }
   }
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
+} 
+  
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/theme_aware_logo.dart';
+import '../../core/widgets/theme_aware_logo.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -64,7 +65,12 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         if (!mounted) return;
-        Navigator.pushReplacementNamed(context, '/login');
+        final fbUser = firebase_auth.FirebaseAuth.instance.currentUser;
+        if (fbUser != null) {
+          Navigator.pushReplacementNamed(context, '/home');
+        } else {
+          Navigator.pushReplacementNamed(context, '/login');
+        }
       }
     });
 
