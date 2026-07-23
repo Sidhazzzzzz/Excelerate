@@ -1,6 +1,6 @@
 // data/mock_data.dart
 
-import '../models/user.dart';
+import 'models/user.dart';
 
 class MockData {
   // Current logged-in user

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../services/auth_service.dart';
+import '../../data/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import '../widgets/theme_aware_logo.dart';
-import '../models/user.dart';
-import '../data/mock_data.dart';
+import '../../core/widgets/theme_aware_logo.dart';
+import '../../data/models/user.dart';
+import '../../data/mock_data.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

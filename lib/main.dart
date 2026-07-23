@@ -1,12 +1,12 @@
 // main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'theme/app_theme.dart';
-import 'screens/splash_screen.dart';
-import 'screens/login_screen.dart';
-import 'screens/register_screen.dart';
-import 'screens/home_screen.dart';
-import 'screens/course_details_screen.dart';
+import 'core/theme/app_theme.dart';
+import 'features/splash/splash_screen.dart';
+import 'features/auth/login_screen.dart';
+import 'features/auth/register_screen.dart';
+import 'features/home/home_screen.dart';
+import 'features/course/course_details_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
